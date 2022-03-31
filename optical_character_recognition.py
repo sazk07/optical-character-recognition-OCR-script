@@ -1,8 +1,10 @@
+import re
 import tesserocr
+import pytesseract
 from PIL import Image
 
 
-def recog(file_name: str) -> str:
+def tesser_recog(file_name: str) -> str:
     img = Image.open(file_name)
     api = tesserocr.PyTessBaseAPI()
     api.SetImage(img)
@@ -10,20 +12,29 @@ def recog(file_name: str) -> str:
     return text_
 
 
-def save_to_file(file_name: str) -> object:
-    output_text = recog(file_name)
-    with open(f"{file_name}.txt", "w", encoding="utf-8") as file_:
-        file_.write(output_text)
-    return file_
+def pytesseract_recog(file_name: str, input_lang: str) -> str:
+    img = Image.open(file_name)
+    img2text = pytesseract.image_to_string(img, lang=input_lang)
+    return img2text
 
 
 def main():
     fname = input("Enter file name: ")
-    ocr = recog(fname)
+    ocr_method = input(
+        "(1) using tesserocr or (2) using pytesseract (preferable if using non-English image text: "
+    )
+    if ocr_method == "1":
+        ocr = tesser_recog(fname)
+    else:
+        language = input("Specify language in image: ")
+        ocr = pytesseract_recog(fname, language)
     print(ocr)
     save_to_file_response = input("save to file (y or n)?: ")
     if save_to_file_response == "y":
-        save_to_file(fname)
+        name = lambda inputname: re.split("\.+", inputname)
+        with open(f"{name(fname)[0]}.txt", "w", encoding="utf-8") as file_:
+            file_.write(ocr)
+            print("output saved")
     else:
         exit()
 
