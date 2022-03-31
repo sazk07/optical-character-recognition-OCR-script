@@ -14,8 +14,8 @@ def tesser_recog(file_name: str) -> str:
 
 def pytesseract_recog(file_name: str, input_lang: str) -> str:
     img = Image.open(file_name)
-    img2text = pytesseract.image_to_string(img, lang=input_lang)
-    return img2text
+    text_ = pytesseract.image_to_string(img, lang=input_lang)
+    return text_
 
 
 def main():
