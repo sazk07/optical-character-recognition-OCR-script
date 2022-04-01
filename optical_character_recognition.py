@@ -25,9 +25,12 @@ def main():
     )
     if ocr_method == "1":
         ocr = tesser_recog(fname)
-    else:
+    elif ocr_method == "2:
         language = input("Specify language in image: ")
         ocr = pytesseract_recog(fname, language)
+    else:
+        print("bad response")
+        quit()
     print(ocr)
     save_to_file_response = input("save to file (y or n)?: ")
     if save_to_file_response == "y":
