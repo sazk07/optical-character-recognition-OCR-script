@@ -21,7 +21,7 @@ def pytesseract_recog(file_name: str, input_lang: str) -> str:
 def main():
     fname = input("Enter file name: ")
     ocr_method = input(
-        "(1) using tesserocr or (2) using pytesseract (preferable if using non-English image text: "
+        "(1) using tesserocr or (2) using pytesseract (preferable if using non-English image text): "
     )
     if ocr_method == "1":
         ocr = tesser_recog(fname)
